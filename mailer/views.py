@@ -156,7 +156,7 @@ def track_click(request, tracking_id, url):
     return redirect(url)
 
 def email_analytics(request):
-    emails = Email.objects.all().prefetch_related('emailtracking_set')
+    emails = Email.objects.all().select_related('tracking')
     return render(request, 'mailer/email_analytics.html', {'emails': emails})
 
 def export_emails_csv(request):
@@ -168,10 +168,15 @@ def export_emails_csv(request):
 
     emails = Email.objects.all()
     for email in emails:
-        for tracking in email.emailtracking_set.all():
+        tracking = getattr(email, 'tracking', None)
+        if tracking:
             writer.writerow([
                 email.recipient, email.subject, tracking.opened, tracking.opened_at,
                 tracking.clicked, tracking.clicked_at
+            ])
+        else:
+            writer.writerow([
+                email.recipient, email.subject, 'No', '', 'No', ''
             ])
 
     return response
