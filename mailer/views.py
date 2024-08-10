@@ -156,11 +156,7 @@ def track_click(request, tracking_id, url):
     return redirect(url)
 
 def email_analytics(request):
-<<<<<<< HEAD
     emails = Email.objects.all().select_related('emailtracking')
-=======
-    emails = Email.objects.all().select_related('tracking')
->>>>>>> 55f01700e16d058329a888c650d3fcb510fa57c7
     return render(request, 'mailer/email_analytics.html', {'emails': emails})
 
 def export_emails_csv(request):
