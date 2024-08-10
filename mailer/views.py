@@ -156,7 +156,7 @@ def track_click(request, tracking_id, url):
     return redirect(url)
 
 def email_analytics(request):
-    emails = Email.objects.all().prefetch_related('emailtracking_set')
+    emails = Email.objects.all().select_related('emailtracking')
     return render(request, 'mailer/email_analytics.html', {'emails': emails})
 
 def export_emails_csv(request):
@@ -175,3 +175,8 @@ def export_emails_csv(request):
             ])
 
     return response
+
+def delete_forever(request, email_id):
+    email = get_object_or_404(Email, id=email_id, category='trash')
+    email.delete()
+    return redirect('trash_emails')

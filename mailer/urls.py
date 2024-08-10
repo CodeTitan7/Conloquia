@@ -4,7 +4,7 @@ from django.urls import path
 from .views import (
     home, send_email, track_email, email_analytics, export_emails_csv,
     track_click, inbox, sent_emails, draft_emails, trash_emails, starred_emails,
-    move_to_trash, move_to_inbox, star_email
+    move_to_trash, move_to_inbox, star_email, delete_forever
 )
 
 urlpatterns = [
@@ -22,5 +22,6 @@ urlpatterns = [
     path('move-to-trash/<int:email_id>/', move_to_trash, name='move_to_trash'),
     path('move-to-inbox/<int:email_id>/', move_to_inbox, name='move_to_inbox'),
     path('star-email/<int:email_id>/', star_email, name='star_email'),
+    path('trash/delete_forever/<int:email_id>/', delete_forever, name='delete_forever'),
 ]
 

@@ -25,6 +25,7 @@
                 <a href="{% url 'star_email' email.id %}" class="btn btn-warning btn-sm">
                     {% if email.starred %}Unstar{% else %}Star{% endif %}
                 </a>
+                <a href="{% url 'delete_forever' email.id %}" onclick="return confirm('Are you sure you want to delete this email forever?');">Delete Forever</a>
             </td>
         </tr>
         {% endfor %}
