@@ -56,8 +56,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'imgview.wsgi.application'
 
-#DATABASE_URL='postgresql://email_data_user:fNX45quX7IBSgwFblrtRsN3ay3HdVLak@dpg-cqqdosaj1k6c73dgbuvg-a.singapore-postgres.render.com/email_data'
-#SECRET_KEY='django-insecure-i4sx=9i*6$moi-)5$m51wu9uenofudt2)y!@^$4f@7+vmbnkc8'
+SECRET_KEY=os.environ.get('SECRET_KEY')
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -128,5 +127,5 @@ EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-#EMAIL_HOST_USER='kingaugustus78@gmail.com'
-#EMAIL_HOST_PASSWORD='qssw wrhx ofiu hiyh'
+EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_HOST_PASSWORD')
