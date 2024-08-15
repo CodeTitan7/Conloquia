@@ -128,7 +128,6 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER='kingaugustus78@gmail.com'
 EMAIL_HOST_PASSWORD='qssw wrhx ofiu hiyh'
->>>>>>> 37a92a6fc3f6ee25e264e6794cda68e02445fee4
 
 
 DEFAULT_EMAIL = 'default@example.com'
