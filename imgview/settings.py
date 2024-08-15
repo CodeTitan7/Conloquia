@@ -61,7 +61,7 @@ WSGI_APPLICATION = 'imgview.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=DATABASE_URL
+        default=os.environ.get('DATABASE_URL')
     )
 }
 
