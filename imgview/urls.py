@@ -14,13 +14,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+def redirect_to_login(request):
+    return redirect('login')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mailer.urls')),
+    path('', redirect_to_login, name='home_redirect'),
+    path('mailer/', include('mailer.urls')),  
+    path('accounts/', include('django.contrib.auth.urls')),  
 ]
 
 urlpatterns += staticfiles_urlpatterns()

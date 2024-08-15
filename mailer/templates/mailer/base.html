@@ -1,77 +1,181 @@
-<!-- templates/mailer/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mailer App{% endblock %}</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #2d2d2d;
-            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #E3F2FD; /* Pale blue background */
+            color: #333;
+            padding-bottom: 50px; /* Adjust padding to ensure enough space for footer */
         }
-        .navbar, .footer, .table {
-            background-color: #333333;
-            color: #ffffff;
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #343a40;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
         }
-        .table th, .table td {
-            color: #ffffff;
+
+        .navbar a, .navbar button {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease; /* Smooth color transition */
         }
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
+
+        .navbar a:hover, .navbar button:hover {
+            color: #ffb3b3;
         }
-        .btn-warning {
-            background-color: #ffc107;
-            border-color: #ffc107;
+
+        .navbar .toggle {
+            display: none;
+            cursor: pointer;
         }
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
+
+        .navbar .toggle .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
         }
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
+
+        /* Hide/show nav links on small screens */
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .navbar a, .navbar button {
+                margin: 10px 0;
+            }
+        }
+
+        /* Container for page content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #FFFFFF, #E0F7FA); /* Gradient background */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure footer stays on top */
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #007bff; /* Changed to match theme */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Transition for color and transform */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Slightly darker blue on hover */
+            transform: scale(1.05); /* Slightly increase size */
+        }
+
+        .btn:active {
+            transform: scale(0.95); /* Slightly decrease size on click */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
         }
     </style>
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Mailer App</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'send_email' %}">Send Email</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'inbox' %}">Inbox</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'sent_emails' %}">Sent</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'draft_emails' %}">Drafts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'trash_emails' %}">Trash</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'starred_emails' %}">Starred</a>
-                </li>
-            </ul>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}"><i class="fas fa-envelope"></i> Mailer App</a>
         </div>
-    </nav>
-    <div class="container mt-4">
+        <div class="toggle" onclick="toggleNavbar()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="{% url 'send_email' %}">Send Email</a>
+            <a href="{% url 'inbox' %}">Inbox</a>
+            <a href="{% url 'sent_emails' %}">Sent</a>
+            <a href="{% url 'draft_emails' %}">Drafts</a>
+            <a href="{% url 'trash_emails' %}">Trash</a>
+            <a href="{% url 'starred_emails' %}">Starred</a>
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
         {% block content %}{% endblock %}
     </div>
-    <footer class="footer mt-auto py-3 bg-dark text-center">
-        <div class="container">
-            <span class="text-muted">© 2024 Mailer App</span>
-        </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Mailer App. All rights reserved.
     </footer>
+
+    <script>
+        function toggleNavbar() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("show");
+        }
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

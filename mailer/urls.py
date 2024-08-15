@@ -3,13 +3,18 @@
 from django.urls import path
 from .views import (
     home, send_email, track_email, email_analytics, export_emails_csv,
-    track_click, inbox, sent_emails, draft_emails, trash_emails, starred_emails,
-    move_to_trash, move_to_inbox, star_email, delete_forever
+    track_click, inbox, sent_emails, draft_emails, trash_emails, starred_emails, success,
+    move_to_trash, move_to_inbox, star_email, delete_forever, signup, profile_view, logout_view, custom_login 
 )
 
 urlpatterns = [
     path('', home, name='home'),
+    path('signup/', signup, name='signup'),
+    path('login/', custom_login, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('profile/', profile_view, name='profile'),
     path('send-email/', send_email, name='send_email'),
+    path('success/', success, name='success'), 
     path('track-email/<str:tracking_id>/', track_email, name='track_email'),
     path('email-analytics/', email_analytics, name='email_analytics'),
     path('export-emails/', export_emails_csv, name='export_emails_csv'),

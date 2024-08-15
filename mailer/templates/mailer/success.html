@@ -6,8 +6,9 @@
 <div class="alert alert-success mt-5" role="alert">
     <h4 class="alert-heading">Success!</h4>
     <p>Your email has been sent successfully.</p>
-    <hr>
-    <a class="btn btn-secondary" href="{% url 'send_email' %}">Send Another Email</a>
+    <hr style="margin: 20px 0;">  <!-- Adds space above and below the <hr> element -->
+
+    <a class="btn btn-secondary me-2" href="{% url 'send_email' %}">Send Another Email</a>
     <a class="btn btn-primary" href="{% url 'email_analytics' %}">View Email Analytics</a>
 </div>
 {% endblock %}

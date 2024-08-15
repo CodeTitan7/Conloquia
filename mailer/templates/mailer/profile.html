@@ -1,0 +1,11 @@
+<!-- profile.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>User Profile</h1>
+<!-- User profile content -->
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+{% endblock %}
